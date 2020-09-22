@@ -20,8 +20,4 @@ RSpec.describe 'GET /api/v1/products', type: :request do
 	it 'should return items with a price' do
 		expect(response_json["products"][0]).to have_key('price')
 	end
-
-	it 'should return items with a category' do
-		expect(response_json["products"][0]).to have_key('category')
-	end
 end
