@@ -8,12 +8,16 @@ RSpec.describe 'POST /api/v1/orders', type: :request do
   } 
 
   let!(:user) { create(:user) }
+  let(:credentials) { user.create_new_auth_token }
+  let(:headers) { { HTTP_ACCEPT: 'application/json'}.merge!(credentials) }
 
   describe 'successfully' do
     before do
-      post '/api/v1/orders', params: { 
+      post '/api/v1/orders', 
+      params: { 
         product: hamburger.id 
-      }
+      },
+      headers: headers
     end
 
     it 'should respond with 200 status' do
@@ -29,7 +33,7 @@ RSpec.describe 'POST /api/v1/orders', type: :request do
     end
 
     it 'order should have correct product in it' do
-      expect(Order.last.order_items[0]["product_id"]).to eq hamburger.id 
+      expect(Order.last.order_items.first["product_id"]).to eq hamburger.id 
     end
   end
 end
