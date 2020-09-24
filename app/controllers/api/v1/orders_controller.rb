@@ -7,7 +7,9 @@ class Api::V1::OrdersController < ApplicationController
 
     order.order_items.create(product: product)
 
-    render json: { order_id: order.id, message: "Item has been added to your order"}
+    response = create_order_response(order)
+
+    render json: response
   end
 
   def update
@@ -16,6 +18,15 @@ class Api::V1::OrdersController < ApplicationController
 
     order.order_items.create(product: product)
 
-    render json: { order_id: order.id, message: "Item has been added to your order"}
+    response = create_order_response(order)
+
+    render json: response
+  end
+
+  private
+
+  def create_order_response(order)
+    response = { order: OrderSerializer.new(order) }
+    response.merge!(message: "Item has been added to your order" )
   end
 end
