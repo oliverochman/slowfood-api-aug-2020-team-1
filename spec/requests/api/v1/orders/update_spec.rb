@@ -4,13 +4,13 @@ RSpec.describe 'PUT /api/v1/orders/:id', type: :request do
   let(:headers) { { HTTP_ACCEPT: 'application/json'}.merge!(credentials) }
 
   let(:hamburger) {
-    create(:product, name: 'Hamburger')
+    create(:product, name: 'Hamburger', price: 100)
   }
   let(:order) { create(:order, user: user) }
   let!(:order_item) { create(:order_item, order: order, product: hamburger) }
 
   let(:pizza) {
-    create(:product, name: 'Pizza')
+    create(:product, name: 'Pizza', price: 200)
   } 
 
   describe 'successfully' do
@@ -31,7 +31,15 @@ RSpec.describe 'PUT /api/v1/orders/:id', type: :request do
     end
 
     it 'should respond with order_id' do
-      expect(response_json).to have_key 'order_id'
+      expect(response_json["order"]).to have_key 'id'
+    end
+
+    it "should respond with order total" do
+      expect(response_json["order"]["total"]).to eq 300
+    end
+
+    it "should respond with amount of products in the order" do
+      expect(response_json["order"]["products"].count).to eq 2
     end
 
     it 'order should have correct product in it' do
