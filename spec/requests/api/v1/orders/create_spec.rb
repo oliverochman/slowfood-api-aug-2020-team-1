@@ -1,6 +1,6 @@
 RSpec.describe 'POST /api/v1/orders', type: :request do
   let!(:hamburger) {
-    create(:product, name: 'Hamburger')
+    create(:product, name: 'Hamburger', price: 100)
   }
 
   let!(:product_that_wont_be_added_to_the_order) {
@@ -29,7 +29,15 @@ RSpec.describe 'POST /api/v1/orders', type: :request do
     end
 
     it 'should respond with order_id' do
-      expect(response_json).to have_key 'order_id'
+      expect(response_json["order"]).to have_key 'id'
+    end
+
+    it "should respond with order total" do
+      expect(response_json["order"]["total"]).to eq 100
+    end
+
+    it "should respond with amount of products in the order" do
+      expect(response_json["order"]["products"].count).to eq 1
     end
 
     it 'order should have correct product in it' do

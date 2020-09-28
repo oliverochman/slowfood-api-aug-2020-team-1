@@ -13,6 +13,7 @@ gem 'puma', '~> 3.7'
 gem 'rack-cors', require: 'rack/cors'
 gem 'devise_token_auth'
 gem 'rest-client'
+gem 'active_model_serializers'
 
 group :development, :test do
   gem 'coveralls', require: false
