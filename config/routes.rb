@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
     namespace :v2 do
       resources :crime_reports, only: [:index]
+      resources :jokes, only: [:create]
     end
   end
 end
