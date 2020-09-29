@@ -10,5 +10,10 @@ Rails.application.routes.draw do
       resources :products, only: [:index]
       resources :orders, only: [:create, :update]
     end
+
+    namespace :v2 do
+      resources :crime_reports, only: [:index]
+      resources :jokes, only: [:create]
+    end
   end
 end
