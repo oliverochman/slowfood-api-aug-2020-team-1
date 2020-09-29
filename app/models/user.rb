@@ -7,4 +7,5 @@ class User < ActiveRecord::Base
   include DeviseTokenAuth::Concerns::User
 
   has_many :orders
+  has_many :jokes
 end
